@@ -40,7 +40,7 @@ Product.init(
     category_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: category,
+        model: 'category',
         key: 'id'
       }
     }
@@ -54,6 +54,5 @@ Product.init(
   }
 );
 
-//product belongs to category??
 
 module.exports = Product;
