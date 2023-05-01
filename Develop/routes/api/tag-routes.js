@@ -7,57 +7,56 @@ router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   Tag.findAll({
-    include: [Product, ProductTag]
+    include: [
+      {
+        model: Product,
+        through: ProductTag
+      }
+    ]
   })
-  .then((tagData) => {
-    res.json(tagData)
-  })
-  .catch((error) => {
-    res.status(500).json(error);
-  })
+  .then((tagData) => 
+    res.json(tagData))
+  .catch((error) => 
+    res.status(500).json(error));
 });
 
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   Tag.findOne({
-    include: [Product, ProductTag],
     where: {
       id: req.params.id
-    }
+    },
+    include: [
+      {
+        model: Product,
+        through: ProductTag
+      }
+    ]
   })
-  .then((tagData) => {
-    res.json(tagData);
-  })
-  .catch((error) => {
-    res.status(500).json(error);
-  })
+  .then((tagData) => 
+    res.json(tagData))
+  .catch((error) => 
+    res.status(500).json(error));
 });
 
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create(req.body)
-  .then((tagData) => {
-    res.json(tagData);
-  })
-  .catch((error) => {
-    res.status(500).json(error);
-  })
+  .then((tagData) => 
+    res.json(tagData))
+  .catch((error) => 
+    res.status(500).json(error));
 });
 
 router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
-  Tag.update(req.body,{
+  Tag.update(req.body, {
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
   })
-  .then((tagData) => {
-    res.json(tagData);
-  })
-  .catch((error) => {
-    res.status(500).json(error);
-  })
+    .then((tag) => res.status(200).json(tag))
+    .catch((err) => res.status(404).json(err));
 });
 
 router.delete('/:id', (req, res) => {
